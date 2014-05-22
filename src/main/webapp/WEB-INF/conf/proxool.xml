@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<proxool-config>
+    <proxool>
+        <alias>easyweb</alias>
+        <driver-url>jdbc:mysql://127.0.0.1:3306/dev</driver-url>
+        <driver-class>com.mysql.jdbc.Driver</driver-class>
+        <driver-properties>
+            <property name="user" value="root"/>
+            <property name="password" value="root"/>
+        </driver-properties>
+        <house-keeping-sleep-time>30000</house-keeping-sleep-time>
+        <maximum-connection-count>25</maximum-connection-count>
+        <minimum-connection-count>1</minimum-connection-count>
+        <maximum-connection-lifetime>300000</maximum-connection-lifetime>
+        <prototype-count>1</prototype-count>
+        <simultaneous-build-throttle>20</simultaneous-build-throttle>
+        <house-keeping-test-sql>select CURRENT_DATE</house-keeping-test-sql>
+        <statistics>15s,10m,1d</statistics>
+        <statistics-log-level>WARN</statistics-log-level>
+    </proxool>
+</proxool-config>
