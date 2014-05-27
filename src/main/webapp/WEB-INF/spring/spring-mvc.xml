@@ -17,7 +17,7 @@
     <mvc:annotation-driven />
 
     <!-- 注解扫描包 -->
-    <context:component-scan base-package="org.springframework.samples.mvc" />
+    <context:component-scan base-package="org.springframework.samples.mvc, com.easyweb.controller" />
 
     <!-- Enables the Spring MVC @Controller programming model -->
     <annotation-driven conversion-service="conversionService" enableMatrixVariables="true">
