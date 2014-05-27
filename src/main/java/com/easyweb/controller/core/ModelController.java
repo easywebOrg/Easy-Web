@@ -15,7 +15,7 @@ public class ModelController {
     @RequestMapping("/model")
     public @ResponseBody String createModel() {
         modelService.createDB();
-        return "Hello world!";
+        return "Create DB Success!";
     }
 
     public ModelService getModelService() {

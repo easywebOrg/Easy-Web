@@ -43,6 +43,10 @@ public class Model {
     @JoinColumn(name = "model_id")
     private Collection<ModelPorperty> modelPorperties;
 
+    @ManyToOne(cascade = {CascadeType.ALL} )
+    @JoinColumn(name="dbinfo_id")
+    private DBInfo dbInfo;
+
     public Collection<ModelPorperty> getModelPorperties() {
         return modelPorperties;
     }
