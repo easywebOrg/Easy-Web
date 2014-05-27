@@ -10,8 +10,13 @@ import org.springframework.stereotype.Service;
 
 @Service("modelService")
 public class ModelServiceImpl implements ModelService {
-    public String createDB() {
-
+    /**
+     * 将系统需要用到的数据库进行创建
+     *
+     * TODO 数据库创将字段顺序跟类中定义顺序不同
+     * TODO 注释未写入数据库
+     */
+    public void createDB() {
         ClassPathResource ac = new ClassPathResource("../spring/spring-common.xml");
         XmlBeanFactory xbf = new XmlBeanFactory(ac);
 //        注意： &sessionFactory ，一定要包含 & ，不加Spring返回的是Hibernate下的SessionFactoryImpl类
@@ -19,6 +24,5 @@ public class ModelServiceImpl implements ModelService {
         Configuration cfg = lsfb.getConfiguration();
         SchemaExport export = new SchemaExport(cfg);
         export.create(true, false);
-        return null;
     }
 }
