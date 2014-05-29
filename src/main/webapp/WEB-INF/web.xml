@@ -21,14 +21,6 @@
         <param-value>/WEB-INF/spring/spring-*.xml</param-value>
     </context-param>
 
-    <context-param>
-        <param-name>proxoolConfigLocation</param-name>
-        <param-value>WEB-INF/conf/proxool.xml</param-value>
-    </context-param>
-    <listener>
-        <listener-class>org.logicalcobwebs.proxool.configuration.ListenerConfigurator</listener-class>
-    </listener>
-
     <!-- 配置Spring监听 -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
