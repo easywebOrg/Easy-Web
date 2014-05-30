@@ -9,4 +9,9 @@ public interface DataSourceService {
      * @return true为可用
      */
     public boolean isDefaultDataSourceConnectable();
+
+    /**
+     * 将系统需要用到的数据库进行创建
+     */
+    public void createSysDB();
 }

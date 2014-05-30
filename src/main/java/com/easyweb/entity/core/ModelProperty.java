@@ -8,7 +8,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "t_model_property")
-public class ModelPorperty {
+public class ModelProperty {
     /**
      * ID主键
      */
@@ -19,8 +19,9 @@ public class ModelPorperty {
     /**
      * 对应模型信息主键ID
      */
-    @Column(name = "model_id")
-    private Integer modelId;
+    @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name="model_id")
+    private Model model;
 
     /**
      * 属性名称
@@ -30,16 +31,14 @@ public class ModelPorperty {
 
     /**
      * 属性类型
-     * TODO 映射为枚举类型
      */
     @Column(length = 1, name = "property_type")
     private String propertyType;
 
     /**
      * 字段类型
-     * TODO 映射为枚举类型
      */
-    @Column(length = 1, name = "column_type")
+    @Column(length = 15, name = "column_type")
     private String columnType;
 
     /**
@@ -63,12 +62,12 @@ public class ModelPorperty {
         this.id = id;
     }
 
-    public Integer getModelId() {
-        return modelId;
+    public Model getModel() {
+        return model;
     }
 
-    public void setModelId(Integer modelId) {
-        this.modelId = modelId;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
     public String getPropertyName() {

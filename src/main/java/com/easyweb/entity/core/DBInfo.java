@@ -24,7 +24,6 @@ public class DBInfo {
 
     /**
      * 数据库类型，mysql、oracle、mssql等
-     * TODO 修改为枚举类型
      */
     @Column(length = 1, name = "db_type")
     private String dbType;

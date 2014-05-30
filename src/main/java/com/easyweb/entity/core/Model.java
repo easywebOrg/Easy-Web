@@ -1,8 +1,11 @@
 package com.easyweb.entity.core;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 模型信息，主要用于持久化数据的建模，模型生成对应表
@@ -30,6 +33,13 @@ public class Model {
     private String modelDesc;
 
     /**
+     * 对应模块信息
+     */
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="module_info_id")
+    private ModuleInfo moduleInfo;
+
+    /**
      * 最后更新时间，同时用于乐观锁
      */
     @Version
@@ -40,20 +50,9 @@ public class Model {
      * 模型属性关联
      */
     @OneToMany(cascade = {CascadeType.ALL})
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "model_id")
-    private Collection<ModelPorperty> modelPorperties;
-
-    @ManyToOne(cascade = {CascadeType.ALL} )
-    @JoinColumn(name="dbinfo_id")
-    private DBInfo dbInfo;
-
-    public Collection<ModelPorperty> getModelPorperties() {
-        return modelPorperties;
-    }
-
-    public void setModelPorperties(Collection<ModelPorperty> modelPorperties) {
-        this.modelPorperties = modelPorperties;
-    }
+    private List<ModelProperty> modelProperties;
 
     public Integer getId() {
         return id;
@@ -85,5 +84,21 @@ public class Model {
 
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
+    }
+
+    public List<ModelProperty> getModelProperties() {
+        return modelProperties;
+    }
+
+    public void setModelProperties(List<ModelProperty> modelProperties) {
+        this.modelProperties = modelProperties;
+    }
+
+    public ModuleInfo getModuleInfo() {
+        return moduleInfo;
+    }
+
+    public void setModuleInfo(ModuleInfo moduleInfo) {
+        this.moduleInfo = moduleInfo;
     }
 }
