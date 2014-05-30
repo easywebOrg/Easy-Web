@@ -15,15 +15,15 @@ public class GenerateDDLServiceImpl implements GenerateDDLService {
     @Override
     public String generateCreateDDL(Model model) {
         StringBuilder ddl = new StringBuilder("CREATE TABLE ");
-        ddl.append(model.getModelName()).append(" ");
+        ddl.append(model.getModelName()).append(" (");
 
-        ddl.append("");
         Collection properties = model.getModelProperties();
         for(Object o : properties) {
             ModelProperty modelProperty = (ModelProperty) o;
             ddl.append(getColumnDDL(modelProperty)).append(", ");
         }
 
+        ddl.append("PRIMARY KEY (`id`));");
 
         return ddl.toString();
     }
