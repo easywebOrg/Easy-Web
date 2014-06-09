@@ -1,21 +1,29 @@
-package com.easyweb.service.core;
+package com.easyweb.service.core.ddl;
 
 import com.easyweb.entity.core.Model;
 import com.easyweb.entity.core.ModelProperty;
 
+import javax.annotation.Resource;
 import java.util.Collection;
 
-public class GenerateDDLServiceImpl implements GenerateDDLService {
-    /**
-     * 根据Model生成DDL
-     *
-     * @param model 模型信息
-     * @return DDL
-     */
+public class DdlGeneratorMySql extends AbstractDdlGenerator {
+    @Resource
+    private DdlGeneratorFactory ddlGeneratorFactory;
+
+    @Override
+    public void registerGenerator() {
+        ddlGeneratorFactory.registerGenerator(this);
+    }
+
+    @Override
+    public String getGeneratorDialect() {
+        return "mysql";
+    }
+
     @Override
     public String generateCreateDDL(Model model) {
         StringBuilder ddl = new StringBuilder("CREATE TABLE ");
-        ddl.append(model.getModelName()).append(" (");
+        ddl.append("`").append(model.getModelName()).append("` (");
 
         Collection properties = model.getModelProperties();
         for(Object o : properties) {
@@ -30,6 +38,6 @@ public class GenerateDDLServiceImpl implements GenerateDDLService {
 
     // 获取列的ddl语句
     private String getColumnDDL(ModelProperty modelProperty) {
-        return "'" + modelProperty.getPropertyName() + "' " + modelProperty.getColumnType();
+        return "`" + modelProperty.getPropertyName() + "` " + modelProperty.getColumnType();
     }
 }

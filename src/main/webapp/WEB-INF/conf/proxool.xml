@@ -2,10 +2,10 @@
 <proxool-config>
     <proxool>
         <alias>easyweb</alias>
-        <driver-url>jdbc:mysql://127.0.0.1:3306/easyweb</driver-url>
+        <driver-url>jdbc:mysql://192.168.1.2:3306/easyweb?socketTimeout=2000</driver-url>
         <driver-class>com.mysql.jdbc.Driver</driver-class>
         <driver-properties>
-            <property name="user" value="root1"/>
+            <property name="user" value="root"/>
             <property name="password" value="root"/>
         </driver-properties>
         <house-keeping-sleep-time>30000</house-keeping-sleep-time>
