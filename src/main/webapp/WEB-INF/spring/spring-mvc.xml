@@ -12,7 +12,7 @@
              >
 
     <!-- Maps '/' requests to the 'home' view -->
-    <mvc:view-controller path="/" view-name="test"/>
+    <mvc:view-controller path="/" view-name="console"/>
 
     <mvc:annotation-driven />
 

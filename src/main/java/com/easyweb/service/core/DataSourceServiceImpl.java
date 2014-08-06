@@ -14,7 +14,7 @@ import javax.xml.parsers.SAXParserFactory;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.Properties;
 
 @Service("dataSourceService")
 public class DataSourceServiceImpl implements DataSourceService {
@@ -25,20 +25,16 @@ public class DataSourceServiceImpl implements DataSourceService {
         String result = null;
         Connection connection = null;
         try {
-            ClassPathResource ac = new ClassPathResource(DEFAULT_PROXOOL_CONFIG_FILE_PATH);
+            final ProxoolXmlConfigurator proxoolXmlConfigurator = getProxoolXmlConfigurator();
 
-            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
-            final SAXParser saxParser = saxParserFactory.newSAXParser();
-            final XMLReader xmlReader = saxParser.getXMLReader();
-            final ProxoolXmlConfigurator proxoolXmlConfigurator = new ProxoolXmlConfigurator();
-            xmlReader.setErrorHandler(proxoolXmlConfigurator);
-            saxParser.parse(ac.getFile(), proxoolXmlConfigurator);
-
-            DriverManager.setLoginTimeout(2);
             Class.forName(proxoolXmlConfigurator.getDriverClass());
 
-            connection = DriverManager.getConnection(proxoolXmlConfigurator.getDriverUrl(),
-                    proxoolXmlConfigurator.getUser(), proxoolXmlConfigurator.getPassword());
+            Properties properties = new Properties();
+            properties.put("user", proxoolXmlConfigurator.getUser());
+            properties.put("password", proxoolXmlConfigurator.getPassword());
+            properties.put("connectTimeout", "2000");
+
+            connection = DriverManager.getConnection(proxoolXmlConfigurator.getDriverUrl(), properties);
             connection.isValid(1);
         } catch (Exception e) {
             result = e.getMessage();
@@ -54,6 +50,25 @@ public class DataSourceServiceImpl implements DataSourceService {
         }
 
         return result;
+    }
+
+    @Override
+    public ProxoolXmlConfigurator getProxoolXmlConfigurator() {
+        try {
+            ClassPathResource ac = new ClassPathResource(DEFAULT_PROXOOL_CONFIG_FILE_PATH);
+
+            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+            SAXParser saxParser = saxParserFactory.newSAXParser();
+            XMLReader xmlReader = saxParser.getXMLReader();
+            ProxoolXmlConfigurator proxoolXmlConfigurator = new ProxoolXmlConfigurator();
+            xmlReader.setErrorHandler(proxoolXmlConfigurator);
+            saxParser.parse(ac.getFile(), proxoolXmlConfigurator);
+
+            return proxoolXmlConfigurator;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
     }
 
     /**
